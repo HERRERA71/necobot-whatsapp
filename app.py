@@ -1,9 +1,8 @@
-from flask import Flask, request, abort
+from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import random
 import re
 import os
-import json
 
 app = Flask(__name__)
 
@@ -35,6 +34,10 @@ def limpiar_telefono(texto):
     return re.sub(r"[^0-9]", "", texto)
 
 usuarios = {}
+
+@app.route("/")
+def home():
+    return "El bot está vivo y funcionando"
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -104,7 +107,7 @@ def webhook():
         msg.body("Gracias por tu tiempo. ¡Mucho éxito! 🙌")
 
     return str(resp)
-import os
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
